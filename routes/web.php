@@ -106,6 +106,7 @@ Route::get( "/newgallery/ant" , [ MyProfileController::class , "ant" ] );
 Route::get( "/newgallery/cat" , [ MyProfileController::class , "cat" ] );
 
 use App\Http\Controllers\Covid19Controller;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\StaffController;
 
 // Route::get('/covid19', [ Covid19Controller::class,"index" ]);
@@ -120,6 +121,4 @@ use App\Http\Controllers\StaffController;
 Route::resource('/covid19', Covid19Controller::class );
 Route::resource('/staff', StaffController::class );
 
-
-
-    
+Route::resource('/post', PostController::class);
