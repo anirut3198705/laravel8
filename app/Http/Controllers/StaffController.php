@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Staff;
 
 class StaffController extends Controller
 {
@@ -11,9 +12,25 @@ class StaffController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+       
+
+        $perPage = 15;
+        $search = $request->get('search');
+        if (!empty($search)) {
+            //กรณีมีข้อมูลที่ต้องการ search จะมีการใช้คำสั่ง where และ orWhere
+            $staffs = Staff::where('name', 'LIKE', "%$search%")
+                ->orWhere('age', 'LIKE', "%$search%")
+                ->orWhere('salary', 'LIKE', "%$search%")
+                ->orderBy('phone', 'desc')->paginate($perPage);
+        } else {
+            //กรณีไม่มีข้อมูล search จะทำงานเหมือนเดิม
+            $staffs = Staff::orderBy('name', 'desc')->paginate($perPage);
+        }
+
+        //DISPLAY ON VIEW
+        return view('staff/index', compact('staffs'));
     }
 
     /**
@@ -24,6 +41,7 @@ class StaffController extends Controller
     public function create()
     {
         //
+        return view('staff.create');
     }
 
     /**
@@ -35,6 +53,11 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         //
+        $requestData = $request->all();
+        
+        Staff::create($requestData);
+
+        return redirect('staff');
     }
 
     /**
@@ -46,6 +69,9 @@ class StaffController extends Controller
     public function show($id)
     {
         //
+        $staffs = Staff::findOrFail($id);
+
+        return view('staff.show', compact('staffs'));
     }
 
     /**
@@ -57,6 +83,10 @@ class StaffController extends Controller
     public function edit($id)
     {
         //
+        $staff = Staff::findOrFail($id);
+
+        return view('staff.edit', compact('staff'));
+
     }
 
     /**
@@ -69,6 +99,10 @@ class StaffController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $requestData = $request->all();        
+        $staffs = Staff::findOrFail($id);
+        $staffs->update($requestData);
+        return redirect('staff');
     }
 
     /**
@@ -80,5 +114,8 @@ class StaffController extends Controller
     public function destroy($id)
     {
         //
+        Staff::destroy($id);
+
+        return redirect('staff');
     }
 }

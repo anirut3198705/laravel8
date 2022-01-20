@@ -106,6 +106,7 @@ Route::get( "/newgallery/ant" , [ MyProfileController::class , "ant" ] );
 Route::get( "/newgallery/cat" , [ MyProfileController::class , "cat" ] );
 
 use App\Http\Controllers\Covid19Controller;
+use App\Http\Controllers\StaffController;
 
 // Route::get('/covid19', [ Covid19Controller::class,"index" ]);
 // Route::get("/covid19/create",[ Covid19Controller::class , "create" ]);
@@ -117,7 +118,7 @@ use App\Http\Controllers\Covid19Controller;
 // Route::delete('/covid19/{id}', [ Covid19Controller::class , 'destroy' ]);
 
 Route::resource('/covid19', Covid19Controller::class );
-
+Route::resource('/staff', StaffController::class );
 
 
 
