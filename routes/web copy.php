@@ -61,12 +61,11 @@ Route::get("/hello", function () {
         $cat = "http://www.onyxtruth.com/wp-content/uploads/2017/06/black-panther-movie-onyx-truth.jpg";
         return view("test/cat", compact("cat") );
     });
-    Route::middleware(['auth', 'role:admin,teacher,manager'])->group(function () {
+    
     Route::get("/teacher" , function (){
         return view("teacher");
     });
-});
-
+    
     Route::get("/student" , function (){
         return view("student");
     });
@@ -122,11 +121,4 @@ use App\Http\Controllers\StaffController;
 Route::resource('/covid19', Covid19Controller::class );
 Route::resource('/staff', StaffController::class );
 
-Route::resource('/post', PostController::class);
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-require __DIR__ . '/auth.php';
-//
+Route::resource('/post', PostController::class); 
