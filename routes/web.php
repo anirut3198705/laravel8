@@ -108,7 +108,10 @@ Route::get( "/newgallery/cat" , [ MyProfileController::class , "cat" ] );
 
 use App\Http\Controllers\Covid19Controller;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehicleController;
 
 // Route::get('/covid19', [ Covid19Controller::class,"index" ]);
 // Route::get("/covid19/create",[ Covid19Controller::class , "create" ]);
@@ -129,4 +132,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
-//
+
+
+Route::resource('user', UserController::class);
+Route::resource('vehicle', VehicleController::class);
+Route::resource('profile', ProfileController::class);
